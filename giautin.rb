@@ -3,7 +3,8 @@ require 'rmagick'
 
 
 
-class Integer # chuyen doi tu thap phan sang nhi phan
+# chuyen doi tu thap phan sang nhi phan
+class Integer 
   def to_bin(width)
     '%0*b' % [width, self]
   end
@@ -19,16 +20,17 @@ class Encode
 	
 	end
 	
-
-	def converse_bit(pixel) # chuyen RGB 16 bit ve 8bit
+# chuyen RGB 16 bit ve 8bit
+	def converse_bit(pixel) 
 		pixel.red /= 257
 		pixel.green /= 257
 		pixel.blue /= 257
 		
 	end
 	
-	
-	def ChenThongDiep (pixel) # chen thong diep dang bit vao trong RGB
+
+ # chen Messesage dang bit vao trong RGB	
+	def ChenThongDiep (pixel)
 			
 			red = pixel.red.to_bin(8).chars #pixel.red kieu integer -> nhi phan -> array char
 			red[7] = @thongdiep[@dem] # chen 1 bit cua thong diep vao bit cuoi cua pixel.red
@@ -98,7 +100,7 @@ class Decode
 	def initialize(link)
 		@link = link
 		@thongdiep = ""
-		@nguyenvan = ""
+		@quocdanh = ""
 		@pixel_list = []
 		@image 
 
@@ -125,7 +127,7 @@ class Decode
 		
 		for i in 1..(@thongdiep.length/8) 
 			word = @thongdiep[0,8] # bat dau tu vi tri 0 , lay 8 phan tu (string)
-			@nguyenvan = @nguyenvan + word.to_i(2).chr # 8 bit binary -> integer -> ASCII 
+			@quocdanh = @quocdanh + word.to_i(2).chr # 8 bit binary -> integer -> ASCII 
 			@thongdiep = @thongdiep[8..@thongdiep.length] # bo di phan da lay
 		end
 	end
@@ -148,7 +150,7 @@ class Decode
 			 	LayThongDiep(pixel)
 			end
 			GomTu()
-			puts @nguyenvan
+			puts @quocdanh
 		rescue
 			puts "File not found ! "
 		end
